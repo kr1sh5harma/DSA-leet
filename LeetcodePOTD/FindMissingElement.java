@@ -1,0 +1,25 @@
+// leet 3731
+class Solution{
+    public List<Integer> findAllMissingElement(int[] nums){
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for(int num:nums){
+            min = Math.min(min, num);
+            max = Math.min(max, num);
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for(int num:nums){
+            set.add(num);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for(int i=min; i<=max; i++){
+            if(!set.contains(i)){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+}
