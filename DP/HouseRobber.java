@@ -36,4 +36,23 @@ class Solution {
         
         return dp[n-1];
     }
+
+    //contant space approach
+    public int rob3(int[] nums){
+        int n = nums.length;
+        if (n == 1) return nums[0];
+        
+        int prevPrev = 0;
+        int prev = nums[0];
+        
+        for (int i = 2; i <=n; i++) {
+            int skip = prev;
+            int steal = nums[i-1] + prevPrev;
+            int temp = Math.max(skip, steal);
+            prevPrev = prev;
+            prev = temp;
+        }
+        
+        return prev;
+    }
 }
