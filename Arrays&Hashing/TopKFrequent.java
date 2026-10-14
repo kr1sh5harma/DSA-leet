@@ -1,30 +1,30 @@
 //leet 347
-public class Solution {
+class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> count = new HashMap<>();
-        List<Integer>[] freq = new List[nums.length + 1];
-
-        for (int i = 0; i < freq.length; i++) {
-            freq[i] = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int num:nums){
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
+        int n = nums.length;
+        List<Integer>[] buckets = new List[n+1];
 
-        for (int n : nums) {
-            count.put(n, count.getOrDefault(n, 0) + 1);
+        for(int num:map.keySet()){
+            int frequency = map.get(num);
+            if(buckets[frequency]==null){
+                buckets[frequency] = new ArrayList<>();
+            }
+            buckets[frequency].add(num);
         }
-        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
-            freq[entry.getValue()].add(entry.getKey());
-        }
-
-        int[] res = new int[k];
+        int[] result = new int[k];
         int index = 0;
-        for (int i = freq.length - 1; i > 0 && index < k; i--) {
-            for (int n : freq[i]) {
-                res[index++] = n;
-                if (index == k) {
-                    return res;
+        for(int i=n; i>=1; i--){
+            if(buckets[i]!=null){
+                for(int num:buckets[i]){
+                    result[index++] = num;
                 }
+                if(index==k) return result;
             }
         }
-        return res;
+        return result;
     }
 }
